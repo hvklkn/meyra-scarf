@@ -2,14 +2,16 @@ const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '../backend/.env') });
 
 const connectDB = require('../backend/db');
-const app = require('../backend/server');
+const app      = require('../backend/server');
 
-let isConnected = false;
+let connected = false;
 
 module.exports = async (req, res) => {
-  if (!isConnected) {
+  if (!connected) {
     await connectDB();
-    isConnected = true;
+    connected = true;
   }
+  // Strip /api prefix so Express routes match correctly
+  req.url = req.url.replace(/^\/api/, '') || '/';
   return app(req, res);
 };
