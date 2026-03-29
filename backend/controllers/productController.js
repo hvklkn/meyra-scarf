@@ -1,32 +1,19 @@
-const fs = require('fs');
-const path = require('path');
-const { v4: uuidv4 } = require('uuid');
-
-const DATA_FILE = path.join(__dirname, '../data/products.json');
-
-const readProducts = () => {
-  const data = fs.readFileSync(DATA_FILE, 'utf-8');
-  return JSON.parse(data);
-};
-
-const writeProducts = (products) => {
-  fs.writeFileSync(DATA_FILE, JSON.stringify(products, null, 2), 'utf-8');
-};
+const Product = require('../models/Product');
 
 // GET /api/products - public, yalnızca aktif ürünleri döner
-exports.getAll = (req, res) => {
+exports.getAll = async (req, res) => {
   try {
-    const products = readProducts();
-    res.json(products.filter((p) => p.isActive));
+    const products = await Product.find({ isActive: true });
+    res.json(products);
   } catch (err) {
     res.status(500).json({ error: 'Ürünler alınamadı' });
   }
 };
 
 // GET /api/admin/products - admin, tüm ürünleri döner (pasifler dahil)
-exports.getAllAdmin = (req, res) => {
+exports.getAllAdmin = async (req, res) => {
   try {
-    const products = readProducts();
+    const products = await Product.find();
     res.json(products);
   } catch (err) {
     res.status(500).json({ error: 'Ürünler alınamadı' });
@@ -34,10 +21,9 @@ exports.getAllAdmin = (req, res) => {
 };
 
 // GET /api/products/:id
-exports.getById = (req, res) => {
+exports.getById = async (req, res) => {
   try {
-    const products = readProducts();
-    const product = products.find((p) => p.id === req.params.id);
+    const product = await Product.findById(req.params.id);
     if (!product) return res.status(404).json({ error: 'Ürün bulunamadı' });
     res.json(product);
   } catch (err) {
@@ -46,7 +32,7 @@ exports.getById = (req, res) => {
 };
 
 // POST /api/products
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
   try {
     const { name, price, description, image, category, stock, isActive } = req.body;
 
@@ -54,9 +40,7 @@ exports.create = (req, res) => {
       return res.status(400).json({ error: 'Ad ve fiyat alanları zorunludur' });
     }
 
-    const products = readProducts();
-    const newProduct = {
-      id: uuidv4(),
+    const product = await Product.create({
       name,
       price: Number(price),
       description: description || '',
@@ -64,52 +48,35 @@ exports.create = (req, res) => {
       category: category || '',
       stock: Number(stock) || 0,
       isActive: isActive !== undefined ? Boolean(isActive) : true,
-    };
+    });
 
-    products.push(newProduct);
-    writeProducts(products);
-    res.status(201).json(newProduct);
+    res.status(201).json(product);
   } catch (err) {
     res.status(500).json({ error: 'Ürün oluşturulamadı' });
   }
 };
 
 // PUT /api/products/:id
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
   try {
-    const products = readProducts();
-    const index = products.findIndex((p) => p.id === req.params.id);
+    const patch = { ...req.body };
+    if (patch.price !== undefined) patch.price = Number(patch.price);
+    if (patch.stock !== undefined) patch.stock = Number(patch.stock);
+    if (patch.isActive !== undefined) patch.isActive = Boolean(patch.isActive);
 
-    if (index === -1) return res.status(404).json({ error: 'Ürün bulunamadı' });
-
-    const updated = {
-      ...products[index],
-      ...req.body,
-      id: req.params.id,
-      price: req.body.price !== undefined ? Number(req.body.price) : products[index].price,
-      stock: req.body.stock !== undefined ? Number(req.body.stock) : products[index].stock,
-      isActive:
-        req.body.isActive !== undefined ? Boolean(req.body.isActive) : products[index].isActive,
-    };
-
-    products[index] = updated;
-    writeProducts(products);
-    res.json(updated);
+    const product = await Product.findByIdAndUpdate(req.params.id, patch, { new: true });
+    if (!product) return res.status(404).json({ error: 'Ürün bulunamadı' });
+    res.json(product);
   } catch (err) {
     res.status(500).json({ error: 'Ürün güncellenemedi' });
   }
 };
 
 // DELETE /api/products/:id
-exports.remove = (req, res) => {
+exports.remove = async (req, res) => {
   try {
-    const products = readProducts();
-    const index = products.findIndex((p) => p.id === req.params.id);
-
-    if (index === -1) return res.status(404).json({ error: 'Ürün bulunamadı' });
-
-    products.splice(index, 1);
-    writeProducts(products);
+    const product = await Product.findByIdAndDelete(req.params.id);
+    if (!product) return res.status(404).json({ error: 'Ürün bulunamadı' });
     res.json({ message: 'Ürün başarıyla silindi' });
   } catch (err) {
     res.status(500).json({ error: 'Ürün silinemedi' });

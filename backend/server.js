@@ -10,6 +10,8 @@ const settingsRoutes = require('./routes/settings');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+connectDB();
+
 const allowedOrigins = (process.env.FRONTEND_URL || 'http://localhost:5173')
   .split(',')
   .map((o) => o.trim());
@@ -45,6 +47,18 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Sunucu hatası' });
 });
 
-app.listen(PORT, () => {
-  console.log(`Meyra Scarf API sunucusu http://localhost:${PORT} adresinde çalışıyor`);
-});
+if (require.main === module) {
+  const connectDB = require('./db');
+  connectDB()
+    .then(() => {
+      app.listen(PORT, () => {
+        console.log(`Meyra Scarf API sunucusu http://localhost:${PORT} adresinde çalışıyor`);
+      });
+    })
+    .catch((err) => {
+      console.error('Başlatma hatası:', err);
+      process.exit(1);
+    });
+}
+
+module.exports = app;

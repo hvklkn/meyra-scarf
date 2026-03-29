@@ -1,9 +1,8 @@
-const { v4: uuidv4 }          = require('uuid');
-const { readOrders, writeOrders } = require('../utils/ordersDb');
-const { generateOrderNumber }     = require('../utils/orderNumber');
-const { processPayment }          = require('../services/paymentService');
+const { generateOrderNumber }  = require('../utils/orderNumber');
+const { processPayment }       = require('../services/paymentService');
+const Order                    = require('../models/Order');
 
-const SHIPPING_FEE = 50; // TL — free shipping threshold can be added here
+const SHIPPING_FEE = 50;
 
 // POST /api/payments/initiate
 exports.initiate = async (req, res) => {
@@ -39,13 +38,9 @@ exports.initiate = async (req, res) => {
   const subtotal = orderItems.reduce((sum, i) => sum + i.subtotal, 0);
   const total    = subtotal + SHIPPING_FEE;
 
-  // ── Create order in pending state ────────────────────────────────────────
-  const orderId     = uuidv4();
   const orderNumber = generateOrderNumber();
-  const now         = new Date().toISOString();
 
-  const newOrder = {
-    id           : orderId,
+  const newOrder = await Order.create({
     orderNumber,
     customerName,
     phone,
@@ -61,34 +56,22 @@ exports.initiate = async (req, res) => {
     paymentMethod: 'credit_card',
     paymentStatus: 'pending',
     orderStatus  : 'payment_pending',
-    cargoCompany    : '',
-    trackingNumber  : '',
-    cargoTrackingUrl: '',
-    cargoStatus  : 'not_created',
-    createdAt    : now,
-    updatedAt    : now,
-  };
-
-  const orders = readOrders();
-  orders.push(newOrder);
-  writeOrders(orders);
+  });
 
   // ── Process payment ──────────────────────────────────────────────────────
   let paymentResult;
   try {
-    paymentResult = await processPayment({ amount: total, orderId, card });
+    paymentResult = await processPayment({ amount: total, orderId: newOrder._id.toString(), card });
   } catch (err) {
-    // Unexpected error from payment service
-    _updateOrderStatus(orderId, { paymentStatus: 'failed', orderStatus: 'cancelled' });
+    await Order.findByIdAndUpdate(newOrder._id, { paymentStatus: 'failed', orderStatus: 'cancelled' });
     return res.status(500).json({ success: false, error: 'Ödeme işlemi başlatılamadı' });
   }
 
-  // ── Update order based on result ─────────────────────────────────────────
   if (paymentResult.success) {
-    _updateOrderStatus(orderId, { paymentStatus: 'paid', orderStatus: 'preparing' });
-    return res.json({ success: true, orderNumber, orderId });
+    await Order.findByIdAndUpdate(newOrder._id, { paymentStatus: 'paid', orderStatus: 'preparing' });
+    return res.json({ success: true, orderNumber, orderId: newOrder._id.toString() });
   } else {
-    _updateOrderStatus(orderId, { paymentStatus: 'failed', orderStatus: 'cancelled' });
+    await Order.findByIdAndUpdate(newOrder._id, { paymentStatus: 'failed', orderStatus: 'cancelled' });
     return res.status(402).json({
       success: false,
       error  : paymentResult.errorMessage || 'Ödeme reddedildi',
@@ -96,14 +79,13 @@ exports.initiate = async (req, res) => {
   }
 };
 
-// GET /api/payments/:orderId/status  — admin
-exports.getStatus = (req, res) => {
+// GET /api/payments/:orderId/status
+exports.getStatus = async (req, res) => {
   try {
-    const orders = readOrders();
-    const order  = orders.find((o) => o.id === req.params.orderId);
+    const order = await Order.findById(req.params.orderId);
     if (!order) return res.status(404).json({ error: 'Sipariş bulunamadı' });
     res.json({
-      orderId      : order.id,
+      orderId      : order._id.toString(),
       orderNumber  : order.orderNumber,
       paymentStatus: order.paymentStatus,
       orderStatus  : order.orderStatus,
@@ -113,23 +95,8 @@ exports.getStatus = (req, res) => {
   }
 };
 
-// POST /api/payments/callback  — webhook stub for future provider integration
+// POST /api/payments/callback
 exports.callback = (req, res) => {
-  // TODO: Validate webhook signature from payment provider
-  // TODO: Update order status based on provider event
   console.log('Payment callback received:', req.body);
   res.json({ received: true });
 };
-
-// ── Helpers ──────────────────────────────────────────────────────────────────
-function _updateOrderStatus(orderId, patch) {
-  try {
-    const orders = readOrders();
-    const index  = orders.findIndex((o) => o.id === orderId);
-    if (index === -1) return;
-    orders[index] = { ...orders[index], ...patch, updatedAt: new Date().toISOString() };
-    writeOrders(orders);
-  } catch (e) {
-    console.error('Order status update failed:', e);
-  }
-}

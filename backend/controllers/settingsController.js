@@ -1,21 +1,11 @@
-const fs = require('fs');
-const path = require('path');
-
-const SETTINGS_FILE = path.join(__dirname, '../data/siteSettings.json');
-
-const readSettings = () => {
-  const data = fs.readFileSync(SETTINGS_FILE, 'utf-8');
-  return JSON.parse(data);
-};
-
-const writeSettings = (settings) => {
-  fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settings, null, 2), 'utf-8');
-};
+const Settings = require('../models/Settings');
 
 // GET /api/settings — public
-exports.getSettings = (req, res) => {
+exports.getSettings = async (req, res) => {
   try {
-    const settings = readSettings();
+    // Always return the single settings document; create defaults if not exists
+    let settings = await Settings.findOne();
+    if (!settings) settings = await Settings.create({});
     res.json(settings);
   } catch (err) {
     res.status(500).json({ error: 'Ayarlar alınamadı' });
@@ -23,20 +13,20 @@ exports.getSettings = (req, res) => {
 };
 
 // PUT /api/settings — admin auth required
-exports.updateSettings = (req, res) => {
+exports.updateSettings = async (req, res) => {
   try {
-    const current = readSettings();
     const body = req.body;
+    const current = await Settings.findOne() || {};
 
     // Deep merge: sadece gönderilen alanları güncelle
-    const updated = {
-      hero:           { ...current.hero,           ...(body.hero           || {}) },
-      brandStory:     { ...current.brandStory,     ...(body.brandStory     || {}) },
-      instagramGrid:  { ...current.instagramGrid,  ...(body.instagramGrid  || {}) },
-      finalCta:       { ...current.finalCta,       ...(body.finalCta       || {}) },
+    const patch = {
+      hero:          { ...(current.hero         || {}), ...(body.hero          || {}) },
+      brandStory:    { ...(current.brandStory   || {}), ...(body.brandStory    || {}) },
+      instagramGrid: { ...(current.instagramGrid|| {}), ...(body.instagramGrid || {}) },
+      finalCta:      { ...(current.finalCta     || {}), ...(body.finalCta      || {}) },
     };
 
-    writeSettings(updated);
+    const updated = await Settings.findOneAndUpdate({}, patch, { new: true, upsert: true });
     res.json(updated);
   } catch (err) {
     res.status(500).json({ error: 'Ayarlar kaydedilemedi' });
