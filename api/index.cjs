@@ -11,7 +11,5 @@ module.exports = async (req, res) => {
     await connectDB();
     connected = true;
   }
-  // Strip /api prefix so Express routes match correctly
-  req.url = req.url.replace(/^\/api/, '') || '/';
   return app(req, res);
 };
