@@ -1,0 +1,41 @@
+[
+  {
+    "id": "e04c9166-b485-47f2-8be4-a0cc2b6f8f31",
+    "orderNumber": "MYR26032903575",
+    "customerName": "ayşe kaya ",
+    "phone": "05555555555",
+    "email": "ornek@gmail.com",
+    "address": "adil sokak kemalpaşa mahallesisakarya serdivan",
+    "city": "sakarya",
+    "district": "serdivan",
+    "postalCode": "54100",
+    "items": [
+      {
+        "productId": "2",
+        "productName": "Blush Velvet Touch",
+        "quantity": 1,
+        "unitPrice": 389,
+        "subtotal": 389
+      },
+      {
+        "productId": "3",
+        "productName": "Caramel Chiffon",
+        "quantity": 1,
+        "unitPrice": 299,
+        "subtotal": 299
+      }
+    ],
+    "subtotal": 688,
+    "shippingFee": 50,
+    "total": 738,
+    "paymentMethod": "credit_card",
+    "paymentStatus": "pending",
+    "orderStatus": "payment_pending",
+    "cargoCompany": "",
+    "trackingNumber": "",
+    "cargoTrackingUrl": "",
+    "cargoStatus": "not_created",
+    "createdAt": "2026-03-29T15:06:11.516Z",
+    "updatedAt": "2026-03-29T15:06:11.516Z"
+  }
+]

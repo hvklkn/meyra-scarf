@@ -1,0 +1,27 @@
+{
+  "hero": {
+    "image": "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=1600&q=80",
+    "badge": "Yeni Sezon Koleksiyonu",
+    "title1": "Zarafeti",
+    "title2": "Hisset",
+    "description": "Modern kadının tarzını yansıtan, özenle seçilmiş dokular ve renklerle tasarlanmış premium eşarp koleksiyonunu keşfedin."
+  },
+  "brandStory": {
+    "image1": "https://images.unsplash.com/photo-1544421151-54c7d24338e5?w=800&q=80",
+    "image2": "https://images.unsplash.com/photo-1620799139507-2a76f79a2f4d?w=800&q=80",
+    "founderName": "Kurucu, Meyra"
+  },
+  "instagramGrid": {
+    "photos": [
+      "https://images.unsplash.com/photo-1618932260643-eee4a2f652a6?w=600&q=80",
+      "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600&q=80",
+      "https://images.unsplash.com/photo-1584850937402-23ccbbfc6cd3?w=600&q=80",
+      "https://images.unsplash.com/photo-1595183353597-d867c2957953?w=600&q=80",
+      "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=600&q=80",
+      "https://images.unsplash.com/photo-1520975661595-6453be3f7070?w=600&q=80"
+    ]
+  },
+  "finalCta": {
+    "image": "https://images.unsplash.com/photo-1584850937402-23ccbbfc6cd3?w=1600&q=80"
+  }
+}

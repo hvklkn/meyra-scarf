@@ -1,0 +1,86 @@
+[
+  {
+    "id": 39,
+    "name": "Tüm ürünler",
+    "description": "Zarafeti ve sadeliği bir araya getiren premium koleksiyon.",
+    "price": "₺...",
+    "originalPrice": null,
+    "image": "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=800&q=80",
+    "colors": [
+      "#f5f0e8",
+      "#e8dfd0",
+      "#d9ccb8"
+    ],
+    "url": "https://www.shopier.com/meyrascarff"
+  },
+  {
+    "id": 52,
+    "name": "Belli Twil İpek",
+    "description": "Zarafeti ve sadeliği bir araya getiren premium koleksiyon.",
+    "price": "1.600\n                                                \n                                                ₺",
+    "originalPrice": null,
+    "image": "https://cdn.shopier.app/pictures_mid/meyrascarff_d2e1efca46c1a142bbc446d2d0e8c1ef.jpeg",
+    "colors": [
+      "#f5f0e8",
+      "#e8dfd0",
+      "#d9ccb8"
+    ],
+    "url": "https://www.shopier.com/meyrascarff/44060603"
+  },
+  {
+    "id": 53,
+    "name": "Belli Twil İpek",
+    "description": "Zarafeti ve sadeliği bir araya getiren premium koleksiyon.",
+    "price": "1.600\n                                                \n                                                ₺",
+    "originalPrice": null,
+    "image": "https://cdn.shopier.app/pictures_mid/meyrascarff_d2e1efca46c1a142bbc446d2d0e8c1ef.jpeg",
+    "colors": [
+      "#f5f0e8",
+      "#e8dfd0",
+      "#d9ccb8"
+    ],
+    "url": "https://www.shopier.com/meyrascarff/44060603"
+  },
+  {
+    "id": 56,
+    "name": "Belli Twil İpek",
+    "description": "Zarafeti ve sadeliği bir araya getiren premium koleksiyon.",
+    "price": "1.600\n                                                \n                                                ₺",
+    "originalPrice": null,
+    "image": "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=800&q=80",
+    "colors": [
+      "#f5f0e8",
+      "#e8dfd0",
+      "#d9ccb8"
+    ],
+    "url": "https://www.shopier.com/meyrascarff"
+  },
+  {
+    "id": 57,
+    "name": "Son ürün",
+    "description": "Zarafeti ve sadeliği bir araya getiren premium koleksiyon.",
+    "price": "₺...",
+    "originalPrice": null,
+    "image": "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=800&q=80",
+    "colors": [
+      "#f5f0e8",
+      "#e8dfd0",
+      "#d9ccb8"
+    ],
+    "url": "https://www.shopier.com/meyrascarff"
+  },
+  {
+    "id": 58,
+    "name": "Belli Twil İpek",
+    "description": "Zarafeti ve sadeliği bir araya getiren premium koleksiyon.",
+    "price": "₺...",
+    "originalPrice": null,
+    "image": "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=800&q=80",
+    "colors": [
+      "#f5f0e8",
+      "#e8dfd0",
+      "#d9ccb8"
+    ],
+    "url": "https://www.shopier.com/meyrascarff"
+  }
+]

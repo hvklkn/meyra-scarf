@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-cream-50 text-sand-800 font-sans;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    @apply bg-meyra-secondary text-meyra-dark;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-8 py-4 bg-meyra-primary text-white font-sans font-medium tracking-widest uppercase text-sm rounded-full transition-all duration-300 hover:bg-sand-700 hover:scale-105 hover:shadow-lg active:scale-95;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-8 py-4 border border-meyra-primary text-meyra-primary font-sans font-medium tracking-widest uppercase text-sm rounded-full transition-all duration-300 hover:bg-meyra-primary hover:text-white hover:scale-105 active:scale-95;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 px-6 py-3 text-sand-600 font-sans font-medium tracking-wider uppercase text-sm transition-all duration-300 hover:text-meyra-primary hover:gap-3;
+  }
+
+  .section-heading {
+    @apply font-serif text-4xl md:text-5xl text-sand-800 leading-tight;
+  }
+
+  .section-subheading {
+    @apply font-script text-lg md:text-xl text-sand-500 italic;
+  }
+
+  .card-hover {
+    @apply transition-all duration-500 hover:-translate-y-2 hover:shadow-xl;
+  }
+
+  .gold-line {
+    @apply block w-12 h-0.5 bg-meyra-primary mx-auto mt-4;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(135deg, #b5936b, #d4b898, #9e8a6e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glass {
+    @apply bg-white/60 backdrop-blur-md border border-white/40;
+  }
+
+  .grain-overlay {
+    @apply bg-texture-grain;
+  }
+
+  .hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-1;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { @apply bg-cream-100; }
+::-webkit-scrollbar-thumb { @apply bg-meyra-secondary rounded-full; }
+
+/* Loading shimmer */
+.shimmer {
+  background: linear-gradient(90deg, #f5e9d3 25%, #ecdcba 50%, #f5e9d3 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.8s infinite;
+}
+
+/* Hide Floating CTA when mobile menu covers screen via body class */
+body.menu-open .floating-cta {
+  display: none !important;
+}

@@ -1,0 +1,72 @@
+[
+  {
+    "id": "1",
+    "name": "Ivory Silk Dream",
+    "price": 349,
+    "description": "Zamanı aşan fildişi ton, premium saten ipekten yapılmış. Her ortam için mükemmel drapaj.",
+    "image": "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=800&q=80",
+    "category": "İpek",
+    "stock": 10,
+    "isActive": true
+  },
+  {
+    "id": "2",
+    "name": "Blush Velvet Touch",
+    "price": 389,
+    "description": "Hafif parlaklığıyla yumuşak pembe kadife. Feminen zarafetin simgesi.",
+    "image": "https://images.unsplash.com/photo-1583391733981-8498408ee4b6?w=800&q=80",
+    "category": "Kadife",
+    "stock": 8,
+    "isActive": true
+  },
+  {
+    "id": "3",
+    "name": "Caramel Chiffon",
+    "price": 299,
+    "description": "Sıcak karamel tonlarında hafif şifon. Günlük lüks için ideal.",
+    "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
+    "category": "Şifon",
+    "stock": 15,
+    "isActive": true
+  },
+  {
+    "id": "4",
+    "name": "Midnight Mocha",
+    "price": 419,
+    "description": "Hafif simli dokunuşuyla zengin mocha tonları. Yeniden tanımlanmış sofistike.",
+    "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=800&q=80",
+    "category": "İpek",
+    "stock": 5,
+    "isActive": true
+  },
+  {
+    "id": "5",
+    "name": "Rose Petal Linen",
+    "price": 319,
+    "description": "Gül yaprağı renklerinde doğal keten karışımı. Nefes alabilir, zarif, zahmetsiz.",
+    "image": "https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?w=800&q=80",
+    "category": "Keten",
+    "stock": 12,
+    "isActive": true
+  },
+  {
+    "id": "6",
+    "name": "Golden Hour Wrap",
+    "price": 459,
+    "description": "Günbatımından ilham alan parlak altın tonlar. Her anı altına çevir.",
+    "image": "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=800&q=80",
+    "category": "Premium",
+    "stock": 7,
+    "isActive": true
+  },
+  {
+    "id": "f157a650-0e2a-476a-b260-315ce53f0d57",
+    "name": "aaaa",
+    "price": 6261,
+    "description": "aaaa",
+    "image": "",
+    "category": "ipek",
+    "stock": 5,
+    "isActive": true
+  }
+]
