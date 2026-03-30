@@ -26,7 +26,7 @@ const ProductTable = ({ products, onEdit, onDelete }) => {
         </thead>
         <tbody>
           {products.map((product) => (
-            <tr key={product.id} className="border-b hover:bg-gray-50 transition-colors">
+            <tr key={product._id} className="border-b hover:bg-gray-50 transition-colors">
               <td className="px-4 py-3">
                 {product.image ? (
                   <img
@@ -65,7 +65,7 @@ const ProductTable = ({ products, onEdit, onDelete }) => {
                     <Pencil size={15} />
                   </button>
                   <button
-                    onClick={() => onDelete(product.id)}
+                    onClick={() => onDelete(product._id)}
                     className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                     title="Sil"
                   >

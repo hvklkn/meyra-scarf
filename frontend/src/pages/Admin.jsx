@@ -58,7 +58,7 @@ const Admin = () => {
   const handleFormSubmit = async (formData) => {
     try {
       if (editingProduct) {
-        await updateProduct(editingProduct.id, formData);
+        await updateProduct(editingProduct._id, formData);
       } else {
         await createProduct(formData);
       }
