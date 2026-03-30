@@ -1,8 +1,8 @@
 const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '../backend/.env') });
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 
-const connectDB = require('../backend/db');
-const app      = require('../backend/server');
+const connectDB = require('./db');
+const app      = require('./server');
 
 let connected = false;
 
